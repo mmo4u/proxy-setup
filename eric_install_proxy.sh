@@ -1,5 +1,4 @@
 #!/bin/sh
-
 install_3proxy() {
     echo "installing 3proxy"
     URL="https://raw.githubusercontent.com/mmo4u/proxy-setup/blob/main/3proxy-0.9.4.tar.gz"
