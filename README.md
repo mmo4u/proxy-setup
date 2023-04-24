@@ -5,3 +5,7 @@ bash <(curl -s "https://raw.githubusercontent.com/mmo4u/proxy-setup/blob/main/er
 
 # Create proxy list (Rand users)
 bash <(curl -s "https://raw.githubusercontent.com/mmo4u/proxy-setup/blob/main/create_proxy.sh")
+
+* Max connection: Default 1000
+* START PORT: Enter by user, recommend 10000
+* Upload data to https://transfer.sh
