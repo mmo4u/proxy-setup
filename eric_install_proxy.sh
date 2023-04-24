@@ -19,4 +19,3 @@ yum -y install gcc net-tools bsdtar zip >/dev/null
 WORKDIR="/home/proxy-installer"
 
 install_3proxy
-bash /etc/rc.local
