@@ -113,7 +113,7 @@ $(awk -F "/" '{print "acl " $1 "_user proxy_auth " $1}' ${USERSDATA})
 # Allow two acl bindings to access:
 # user bach0 and port 10000
 
-$(awk -F "/" '{print "http_access allow " $1 "_user " $4}' ${USERSDATA}) 
+$(awk -F "/" '{print "http_access allow " $1 "_user " "port" $4}' ${USERSDATA}) 
 
 http_access deny all
 
