@@ -188,9 +188,9 @@ EOF
 
 
 echo "installing apps"
-#yum -y install gcc net-tools bsdtar zip >/dev/null
+yum -y install gcc net-tools bsdtar zip >/dev/null
 
-#install_squid
+install_squid
 
 echo "working folder = proxy-installer"
 WORKDIR="proxy-installer"
@@ -220,6 +220,8 @@ LAST_PORT=$(($FIRST_PORT + $COUNT))
 gen_users >$WORKDIR/user_passwords.txt
 
 gen_squid_conf >/etc/squid/squid.conf
+
+echo "Restart squid"
 
 systemctl restart squid
 
