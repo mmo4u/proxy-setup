@@ -198,6 +198,12 @@ yum -y install gcc net-tools bsdtar zip >/dev/null
 
 install_squid
 
+echo "Install yum -y install httpd-tools"
+yum -y install httpd-tools
+touch /etc/squid/user_passwords
+cat /etc/squid/user_passwords
+htpasswd -b /etc/squid/user_passwords minhnk honganh@123
+
 echo "working folder = proxy-installer"
 WORKDIR="proxy-installer"
 
