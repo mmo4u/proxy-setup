@@ -139,6 +139,12 @@ gen_users() {
     done
 }
 
+gen_users_file() {
+    seq $FIRST_PORT $LAST_PORT | while read port; do
+        echo "usr$(random)_$port/pass$(random)/$IP4/$port/$(gen64 $IP6)"
+    done
+}
+
 gen_proxy_file_for_user() {
     cat >proxy.txt <<EOF
 $(awk -F "/" '{print $3 ":" $4 ":" $1 ":" $2 }' ${USERSDATA})
@@ -216,7 +222,7 @@ FIRST_PORT=10000
 LAST_PORT=$(($FIRST_PORT + $COUNT))
 
 gen_users >$WORKDIR/user_passwords.txt
-
+gen_proxy_file_for_user >/etc/squid/user_passwords
 gen_squid_conf >/etc/squid/squid.conf
 
 echo "Restart squid"
