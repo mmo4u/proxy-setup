@@ -197,8 +197,6 @@ WORKDIR="proxy-installer"
 
 echo "Create users"
 USERSDATA="${WORKDIR}/user_passwords.txt"
-touch $WORKDIR/user_passwords.txt
-cat $WORKDIR/user_passwords.txt
 
 # USERACL="${WORKDIR}/user_acls.txt"
 # OUTGOINGADDRESS="${WORKDIR}/tcp_outgoing_addresses.txt"
