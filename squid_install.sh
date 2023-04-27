@@ -141,7 +141,7 @@ gen_users() {
 
 gen_users_file() {
     cat <<EOF
-    $(awk -F "/" '{echo $1 ":" $2}' ${USERSDATA}) 
+    $(awk -F "/" '{print $1 ":" $2}' ${USERSDATA}) 
 EOF
 }
 
