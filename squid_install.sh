@@ -182,13 +182,13 @@ gen_tcp_outgoing_address() {
 
 gen_iptables() {
     cat <<EOF
-    $(awk -F "/" '{print "iptables -I INPUT -p tcp --dport " $4 "  -m state --state NEW -j ACCEPT"}' ${WORKDATA}) 
+    $(awk -F "/" '{print "iptables -I INPUT -p tcp --dport " $4 "  -m state --state NEW -j ACCEPT"}' ${USERSDATA}) 
 EOF
 }
 
 gen_ifconfig() {
     cat <<EOF
-$(awk -F "/" '{print "ifconfig eth0 inet6 add " $5 "/64"}' ${WORKDATA})
+$(awk -F "/" '{print "ifconfig eth0 inet6 add " $5 "/64"}' ${USERSDATA})
 EOF
 }
 
@@ -202,7 +202,6 @@ echo "Install yum -y install httpd-tools"
 yum -y install httpd-tools
 touch /etc/squid/user_passwords
 cat /etc/squid/user_passwords
-htpasswd -b /etc/squid/user_passwords minhnk honganh@123
 
 echo "working folder = proxy-installer"
 WORKDIR="proxy-installer"
@@ -231,23 +230,21 @@ gen_users >$WORKDIR/user_passwords.txt
 gen_users_file >/etc/squid/user_passwords
 gen_squid_conf >/etc/squid/squid.conf
 
+gen_iptables >$WORKDIR/boot_iptables.sh
+gen_ifconfig >$WORKDIR/boot_ifconfig.sh
+chmod +x ${WORKDIR}/boot_*.sh /etc/rc.local
+
+
+cat >>/etc/rc.local <<EOF
+bash ${WORKDIR}/boot_iptables.sh
+bash ${WORKDIR}/boot_ifconfig.sh
+ulimit -n 10048
+
 echo "Restart squid"
-
 systemctl restart squid
+EOF
 
-# gen_iptables >$WORKDIR/boot_iptables.sh
-# gen_ifconfig >$WORKDIR/boot_ifconfig.sh
-# chmod +x ${WORKDIR}/boot_*.sh /etc/rc.local
-
-
-# cat >>/etc/rc.local <<EOF
-# bash ${WORKDIR}/boot_iptables.sh
-# bash ${WORKDIR}/boot_ifconfig.sh
-# ulimit -n 10048
-# service 3proxy start
-# EOF
-
-# bash /etc/rc.local
+bash /etc/rc.local
 
 gen_proxy_file_for_user
 upload_proxy
